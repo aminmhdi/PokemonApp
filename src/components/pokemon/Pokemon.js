@@ -1,62 +1,52 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Row, Col, Spinner, Card, Image, Badge, Button } from "react-bootstrap";
+import React, { useEffect, useContext } from "react";
+import { Row, Col, Spinner, Card, Image, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import PropTypes from "prop-types";
 import PokemonContext from "../../context/pokemon/pokemonContext";
 
 const Pokemon = () => {
   let { id } = useParams();
   const pokemonContext = useContext(PokemonContext);
-  useEffect(() => {
-    pokemonContext.getPokemon(id);
-  }, []);
 
-  const pokemon = pokemonContext.pokemon;
+  const { getPokemon, loading, pokemon } = pokemonContext;
   const {
     login,
-    node_id,
+    // node_id,
     avatar_url,
-    gravatar_id,
-    url,
+    // gravatar_id,
+    // url,
     html_url,
-    followers_url,
-    following_url,
-    gists_url,
-    starred_url,
-    subscriptions_url,
-    organizations_url,
-    repos_url,
-    events_url,
-    received_events_url,
-    type,
-    site_admin,
+    // followers_url,
+    // following_url,
+    // gists_url,
+    // starred_url,
+    // subscriptions_url,
+    // organizations_url,
+    // repos_url,
+    // events_url,
+    // received_events_url,
+    // type,
+    // site_admin,
     name,
     company,
-    blog,
+    // blog,
     location,
-    email,
-    hireable,
+    // email,
+    // hireable,
     bio,
-    twitter_username,
+    // twitter_username,
     public_repos,
     public_gists,
     followers,
-    following,
-    created_at,
-    updated_at
-  } = pokemonContext.pokemon;
+    following
+    // created_at,
+    // updated_at
+  } = pokemon;
 
-  //   useEffect(() => {
-  //     getPokemon(id); //function call when component will load for very first time
-  //   }, []);
+  useEffect(() => {
+    getPokemon(id);
+  }, []);
 
-  //   this.getPokemon({ id });
-
-  // const { pokemon } = this.props.pokemon;
-
-  // const { loading } = this.props;
-
-  if (pokemonContext.loading)
+  if (loading)
     return (
       <div className="p-3 text-center">
         <Spinner />
@@ -65,14 +55,6 @@ const Pokemon = () => {
 
   return (
     <div>
-      <div className="pt-3 px-3">
-        <Link
-          to={"/"}
-          className="btn btn-secondary"
-        >
-          Back to search
-        </Link>
-      </div>
       <div className="p-3">
         <Card>
           <Card.Body>
@@ -81,6 +63,20 @@ const Pokemon = () => {
                 md={6}
                 className="text-center"
               >
+                <Row>
+                  <Col
+                    lg={6}
+                    className="text-start"
+                  >
+                    <Link
+                      to={"/"}
+                      className="btn btn-sm btn-secondary"
+                    >
+                      Back to search
+                    </Link>
+                    <div className="d-inline p-5">{login}</div>
+                  </Col>
+                </Row>
                 <Image
                   src={avatar_url}
                   alt={login}
@@ -104,8 +100,7 @@ const Pokemon = () => {
                 <div>Username: {login}</div>
                 <div>Company: {company}</div>
                 <div>Website: {company}</div>
-                <p>
-                </p>
+                <p></p>
                 <p>
                   <a
                     className="btn btn-dark"
@@ -162,12 +157,6 @@ const Pokemon = () => {
       </div>
     </div>
   );
-};
-
-Pokemon.propTypes = {
-  // loading: PropTypes.bool,
-  // pokemon: PropTypes.object.isRequired,
-  // getPokemon: PropTypes.func.isRequired
 };
 
 export default Pokemon;

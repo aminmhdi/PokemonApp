@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Card, Button, Col, Form, Row } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
-import PropTypes from "prop-types";
 import PokemonContext from "../../context/pokemon/pokemonContext";
 
 const PokemonSearch = () => {
   const pokemonContext = useContext(PokemonContext);
-  
+
   const [text, setText] = useState("");
 
   const onSubmit = (e) => {
@@ -61,10 +60,6 @@ const PokemonSearch = () => {
       </Card>
     </div>
   );
-};
-
-Search.propTypes = {
-
 };
 
 export default PokemonSearch;

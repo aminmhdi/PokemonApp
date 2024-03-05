@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Image } from "react-bootstrap";
 import PropTyes from "prop-types";
 import { Link } from "react-router-dom";
-const PokemonItem = ({ pokemon: { id, login, avatar_url, html_url } }) => {
+const PokemonItem = ({ pokemon: { id, login, avatar_url } }) => {
   return (
     <Card>
       <Card.Body className="text-center">

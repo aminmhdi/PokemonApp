@@ -3,7 +3,7 @@ import { Github } from "react-bootstrap-icons";
 import { Navbar } from "react-bootstrap";
 import PropTyes from "prop-types";
 
-const AppNavbar = ({ icon, title }) => {
+const AppNavbar = ({ title }) => {
   return (
     <Navbar className="navbar-expand-lg navbar-light bg-light">
       <a
