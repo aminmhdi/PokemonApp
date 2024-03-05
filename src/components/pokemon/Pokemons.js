@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import PokemonItem from "./PokemonItem";
 import { Alert, Col, Row, Spinner } from "react-bootstrap";
 import PropTyes from "prop-types";
 import { ExclamationCircle } from "react-bootstrap-icons";
-const Pokemons = ({ pokemons, loading }) => {
+import PokemonContext from "../../context/pokemon/pokemonContext";
+
+const Pokemons = () => {
+  const pokemonContext = useContext(PokemonContext);
+  const { loading, pokemons } = pokemonContext;
+
+  useEffect(() => {
+    setTimeout(() => {
+        pokemonContext.searchPokemon('');
+    }, 200);
+  }, []);
+
   if (loading) {
     return (
       <div className="p-3 text-center">
@@ -48,7 +59,7 @@ const Pokemons = ({ pokemons, loading }) => {
   }
 };
 Pokemons.propTyes = {
-  pokemons: PropTyes.array.isRequired,
-  loading: PropTyes.bool.isRequired
+  // pokemons: PropTyes.array.isRequired,
+  // loading: PropTyes.bool.isRequired
 };
 export default Pokemons;

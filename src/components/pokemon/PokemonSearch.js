@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Card, Button, Col, Form, Row } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
+import PokemonContext from "../../context/pokemon/pokemonContext";
 
-const PokemonSearch = ({ searchPokemon }) => {
+const PokemonSearch = () => {
+  const pokemonContext = useContext(PokemonContext);
+  
   const [text, setText] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
-    searchPokemon(text);
+    pokemonContext.searchPokemon(text);
     setText(text);
   };
 
@@ -61,7 +64,7 @@ const PokemonSearch = ({ searchPokemon }) => {
 };
 
 Search.propTypes = {
-  searchPokemon: PropTypes.func.isRequired
+
 };
 
 export default PokemonSearch;

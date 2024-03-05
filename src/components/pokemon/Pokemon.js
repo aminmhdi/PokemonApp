@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Row, Col, Spinner, Card, Image, Badge, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
+import PokemonContext from "../../context/pokemon/pokemonContext";
 
-const Pokemon = ({ pokemon, loading, getPokemon }) => {
+const Pokemon = () => {
   let { id } = useParams();
-
+  const pokemonContext = useContext(PokemonContext);
   useEffect(() => {
-    getPokemon(id);
+    pokemonContext.getPokemon(id);
   }, []);
 
+  const pokemon = pokemonContext.pokemon;
   const {
     login,
     node_id,
@@ -42,7 +44,7 @@ const Pokemon = ({ pokemon, loading, getPokemon }) => {
     following,
     created_at,
     updated_at
-  } = pokemon;
+  } = pokemonContext.pokemon;
 
   //   useEffect(() => {
   //     getPokemon(id); //function call when component will load for very first time
@@ -54,7 +56,7 @@ const Pokemon = ({ pokemon, loading, getPokemon }) => {
 
   // const { loading } = this.props;
 
-  if (loading)
+  if (pokemonContext.loading)
     return (
       <div className="p-3 text-center">
         <Spinner />
@@ -98,10 +100,11 @@ const Pokemon = ({ pokemon, loading, getPokemon }) => {
                 ) : (
                   <></>
                 )}
+
+                <div>Username: {login}</div>
+                <div>Company: {company}</div>
+                <div>Website: {company}</div>
                 <p>
-                  <div>Username: {login}</div>
-                  <div>Company: {company}</div>
-                  <div>Website: {company}</div>
                 </p>
                 <p>
                   <a
@@ -162,9 +165,9 @@ const Pokemon = ({ pokemon, loading, getPokemon }) => {
 };
 
 Pokemon.propTypes = {
-  loading: PropTypes.bool,
-  pokemon: PropTypes.object.isRequired,
-  getPokemon: PropTypes.func.isRequired
+  // loading: PropTypes.bool,
+  // pokemon: PropTypes.object.isRequired,
+  // getPokemon: PropTypes.func.isRequired
 };
 
 export default Pokemon;
