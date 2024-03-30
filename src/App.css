@@ -1,0 +1,24 @@
+.loading-overlay {
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: rgba(255, 255, 255, .5);
+    pointer-events: none;
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-select{
+    width: auto!important;
+    float: right;
+}
+
+.pagination{
+    display: inline-flex;
+}
+
+a {
+    text-decoration: none;
+}

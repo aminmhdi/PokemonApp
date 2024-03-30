@@ -1,3 +1,0 @@
-export const SEARCH_POKEMONS = "SEARCH_POKEMONS";
-export const GET_POKEMON = "GET_POKEMON";
-export const SET_LOADING = "SET_LOADING";

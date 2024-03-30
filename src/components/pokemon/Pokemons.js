@@ -1,59 +1,137 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import PokemonItem from "./PokemonItem";
-import { Alert, Col, Row, Spinner } from "react-bootstrap";
+import { Alert, Card, CardBody, Col, Row, Spinner } from "react-bootstrap";
 import { ExclamationCircle } from "react-bootstrap-icons";
-import PokemonContext from "../../context/pokemon/pokemonContext";
+import { connect } from "react-redux";
+import {
+  searchPokemon,
+  setPokemonPageSize
+} from "../../actions/pokemonActions";
+import PropTypes from "prop-types";
+import PokemonPagination from "./PokemonPagination";
 
-const Pokemons = () => {
-  const pokemonContext = useContext(PokemonContext);
-  const { loading, pokemons } = pokemonContext;
-
+const Pokemons = ({
+  pokemon: { search, pagedList, loading },
+  searchPokemon,
+  setPokemonPageSize
+}) => {
   useEffect(() => {
-    pokemonContext.searchPokemon("");
+    searchPokemon({ page: 1, size: search.pageSize });
+    // eslint-disable-next-line
   }, []);
 
-  if (loading) {
+  const onPageSizeChange = (newPageSize) => {
+    setPokemonPageSize(newPageSize);
+    searchPokemon({
+      name: search.name,
+      type: search.type,
+      size: newPageSize,
+      page: 1
+    });
+  };
+
+  if ((loading && pagedList == null) || pagedList.data == null) {
     return (
-      <div className="p-3 text-center">
-        <Spinner />
+      <div className="px-3 text-center">
+        <Card>
+          <CardBody>
+            <Spinner variant="primary" />
+          </CardBody>
+        </Card>
       </div>
     );
-  } else if (pokemons.length === 0) {
+  } else if (
+    pagedList == null ||
+    pagedList.data == null ||
+    pagedList.data.length === 0
+  ) {
     return (
       <div className="px-3">
-        <Row>
-          <Col lg="12">
-            <Alert className="alert-warning text-center">
-              <ExclamationCircle />
-              No records were found!
-            </Alert>
-          </Col>
-        </Row>
+        <Card>
+          <CardBody>
+            <Row>
+              <Col lg="12">
+                <Alert className="alert-warning text-center">
+                  <ExclamationCircle />
+                  No records were found!
+                </Alert>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
       </div>
     );
   } else {
     return (
       <div className="px-3">
-        <Row>
-          {pokemons.map((pokemon) => {
-            return (
-              <Col
-                lg="3"
-                md="4"
-                sm="6"
-                className="mb-4"
-              >
-                <PokemonItem
-                  key={pokemon.id}
-                  pokemon={pokemon}
-                />
-              </Col>
-            );
-          })}
-        </Row>
+        <Card>
+          <CardBody>
+            <div className="position-relative">
+              {loading && (
+                <div className="position-absolute loading-overlay">
+                  <Spinner variant="primary" />
+                </div>
+              )}
+              <Row>
+                <Col
+                  lg="12"
+                  className="disabled"
+                >
+                  <div className="table-responsive">
+                    <table className="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Name</th>
+                          <th>Type</th>
+                          <th>HP</th>
+                          <th>Attack</th>
+                          <th>Defence</th>
+                          <th>Attack Speed</th>
+                          <th>Defence Speed</th>
+                          <th>Speed</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pagedList.data.map((pokemon) => {
+                          return (
+                            <PokemonItem
+                              key={pokemon.id}
+                              pokemon={pokemon}
+                            />
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </Col>
+                <Col lg="12">
+                  <PokemonPagination
+                    pagedList={pagedList}
+                    searchPokemon={searchPokemon}
+                    onPageSizeChange={onPageSizeChange}
+                    search={search}
+                  />
+                </Col>
+              </Row>
+            </div>
+          </CardBody>
+        </Card>
       </div>
     );
   }
 };
 
-export default Pokemons;
+Pokemons.propTypes = {
+  pokemon: PropTypes.object.isRequired,
+  searchPokemon: PropTypes.func.isRequired,
+  setPokemonPageSize: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  pokemon: state.pokemon
+});
+
+export default connect(mapStateToProps, { searchPokemon, setPokemonPageSize })(
+  Pokemons
+);

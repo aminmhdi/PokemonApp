@@ -22,7 +22,13 @@ const About = () => {
               </a>
             </Col>
             <Col lg={12}>
-              <p>Version 1.0</p>
+              Github:{" "}
+              <a
+                className="no"
+                href="https://github.com/aminmhdi/PokemonApp"
+              >
+                https://github.com/aminmhdi/PokemonApp
+              </a>
             </Col>
           </Row>
         </CardBody>

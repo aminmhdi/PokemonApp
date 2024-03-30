@@ -1,29 +1,18 @@
 import React from "react";
-import { Card, Image } from "react-bootstrap";
 import PropTyes from "prop-types";
-import { Link } from "react-router-dom";
-const PokemonItem = ({ pokemon: { id, login, avatar_url } }) => {
+const PokemonItem = ({ pokemon }) => {
   return (
-    <Card>
-      <Card.Body className="text-center">
-        <Image
-          src={avatar_url}
-          alt={login}
-          style={{ maxWidth: 100 }}
-          roundedCircle={true}
-        ></Image>
-        <h3>{login}</h3>
-
-        <div>
-          <Link
-            to={`/pokemon/${id}`}
-            className="btn btn-dark btn-sm my-1"
-          >
-            More
-          </Link>
-        </div>
-      </Card.Body>
-    </Card>
+    <tr>
+      <td>{pokemon.id}</td>
+      <td>{pokemon.name}</td>
+      <td>{pokemon.type}</td>
+      <td>{pokemon.hp}</td>
+      <td>{pokemon.attack}</td>
+      <td>{pokemon.defense}</td>
+      <td>{pokemon.sp_atk}</td>
+      <td>{pokemon.sp_def}</td>
+      <td>{pokemon.speed}</td>
+    </tr>
   );
 };
 PokemonItem.propTyes = {

@@ -1,43 +1,41 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AppNavbar from "./components/layout/Navbar";
-import Pokemon from "./components/pokemon/Pokemon";
 import Home from "./components/pages/home";
 import About from "./components/pages/about";
 import NotFound from "./components/pages/notfound";
-import PokemonState from "./context/pokemon/pokemonState";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const App = () => {
   return (
-    <PokemonState>
+    <Provider store={store}>
       <Router>
         <div className="app">
           <AppNavbar />
-          <Routes>
-            <Route
-              exact
-              path="/"
-              Component={Home}
-            />
-            <Route
-              exact
-              path="/about"
-              Component={About}
-            />
-            <Route
-              exact
-              path="/pokemon/:id"
-              Component={Pokemon}
-            />
-            <Route
-              path="*"
-              Component={NotFound}
-            />
-          </Routes>
+          <div className="container">
+            <Routes>
+              <Route
+                exact
+                path="/"
+                Component={Home}
+              />
+              <Route
+                exact
+                path="/about"
+                Component={About}
+              />
+              <Route
+                path="*"
+                Component={NotFound}
+              />
+            </Routes>
+          </div>
         </div>
       </Router>
-    </PokemonState>
+    </Provider>
   );
 };
 
