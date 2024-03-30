@@ -23,8 +23,8 @@ const PokemonSearch = ({
     setPokemonSearchName(name.current.value);
     setPokemonSearchType(type.current.value);
     searchPokemon({
-      name: search.name,
-      type: search.value,
+      name: name.current.value,
+      type: type.current.value,
       page: 1,
       size: search.pageSize
     });
